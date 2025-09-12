@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Modern URL Shortener</title>
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-dark: #3730a3;
+      --bg: #f9fafb;
+      --text: #1f2937;
+      --border: #d1d5db;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      color: var(--text);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 520px;
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      padding: 32px;
+      animation: fadeIn 0.6s ease;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    input[type="url"], input[name="generated_url"] {
+      width: 100%;
+      padding: 14px 16px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 1rem;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: var(--primary-dark);
+    }
+
+    .output {
+      margin-top: 16px;
+    }
+
+    .output label {
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 24px 20px;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Modern URL Shortener</h1>
+    <form method="post" action="/">
+      <label for="url">Enter an https:// URL:</label>
+      <input 
+        type="url"
+        name="url"
+        id="url"
+        placeholder="https://www.example.com"
+        pattern="https://.*"
+        value="{{old_url}}"
+        required
+      >
+      <button type="submit">Shorten URL</button>
+      <div class="output">
+        <label for="generated_url">Generated URL:</label>
+        <label name="generated_url" id="generated_url" value="" readonly>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
