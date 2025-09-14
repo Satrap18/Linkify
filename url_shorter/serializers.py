@@ -11,8 +11,7 @@ class ShorterSerializer(serializers.ModelSerializer):
 
     
     def validate_url(self, value):
-        
-        url = value
+        url = self.initial_data['original_url']
         h = hashlib.sha256(url.encode('utf-8')).digest()
         en = base64.urlsafe_b64encode(h)
         short_link = en[:8]
