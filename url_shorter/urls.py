@@ -1,5 +1,5 @@
 from django.urls import path, include
-from url_shorter.views import ShorterView
+from url_shorter.views import ShorterView, ReturnRequestView
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
@@ -7,5 +7,6 @@ router.register(r'url', ShorterView, basename='url')
 
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('api/', include(router.urls)),
+    path('', ReturnRequestView.as_view(), name='main')
 ]
