@@ -20,16 +20,26 @@ class ReturnRequestView(View):
 
         return render(request, "main.html")
 
-    def post(self, request, *args, **kwargs):
+class ReturnRequestView(View):
 
+    def post(self, request, *args, **kwargs):
         original_url = request.POST.get("original_url")
         url_hash = hashlib.sha256(original_url.encode('utf-8')).digest()
         base64_encoded = base64.urlsafe_b64encode(url_hash)
         short_code_bytes = base64_encoded[:8]
         short_code = short_code_bytes.decode('utf-8').rstrip('=')
 
-        Shorter.objects.create(original_url=original_url, url=short_code)
-        return render(request, 'main.html', {'short_code':f'http://localhost:8000/{short_code}',"original_url": ""})
+        shorter, created = Shorter.objects.get_or_create(
+            original_url=original_url,
+            defaults={'url': short_code}
+        )
+
+        return render(
+            request, 
+            'main.html', 
+            {'short_code': f'http://localhost:8000/{shorter.url}', "original_url": ""}
+        )
+
 
 class RedirectShortUrl(View):
 
