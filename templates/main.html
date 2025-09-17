@@ -115,21 +115,21 @@
 <body>
   <div class="container">
     <h1>Modern URL Shortener</h1>
-    <form method="post" action="/">
+    <form method="post">
+      {% csrf_token %}
       <label for="url">Enter an https:// URL:</label>
       <input 
         type="url"
-        name="url"
-        id="url"
+        name="original_url"
+        id="original_url"
         placeholder="https://www.example.com"
         pattern="https://.*"
-        value="{{old_url}}"
         required
       >
       <button type="submit">Shorten URL</button>
       <div class="output">
         <label for="generated_url">Generated URL:</label>
-        <label name="generated_url" id="generated_url" value="" readonly>
+        <input type="text" id="generated_url" name="generated_url" value="{{ short_code }}" readonly>
       </div>
     </form>
   </div>
