@@ -19,3 +19,6 @@ class ShorterTestCase(TestCase):
         with self.assertRaises(IntegrityError):
             Shorter.objects.create(original_url='https://example.com', url='http://short.ly/abc123')
 
+    def test_blank_original_url_allowed(self):
+        shorter = Shorter.objects.create(original_url='', url='http://short.ly/xyz456')
+        self.assertEqual(shorter.original_url, '')
