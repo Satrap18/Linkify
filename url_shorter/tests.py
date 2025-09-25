@@ -14,3 +14,8 @@ class ShorterTestCase(TestCase):
     def test_url_field(self):
         shorter = Shorter.objects.get(id=1)
         self.assertEqual(shorter.url, 'http://short.ly/abc123')
+    
+    def test_url_unique_constraint(self):
+        with self.assertRaises(IntegrityError):
+            Shorter.objects.create(original_url='https://example.com', url='http://short.ly/abc123')
+
