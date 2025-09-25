@@ -22,3 +22,7 @@ class ShorterTestCase(TestCase):
     def test_blank_original_url_allowed(self):
         shorter = Shorter.objects.create(original_url='', url='http://short.ly/xyz456')
         self.assertEqual(shorter.original_url, '')
+
+    def test_blank_url_allowed(self):
+        shorter = Shorter.objects.create(original_url='https://example.com', url='')
+        self.assertEqual(shorter.url, '')
