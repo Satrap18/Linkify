@@ -33,7 +33,7 @@ Linkify is a lightweight URL shortener service with a small web UI and a REST AP
 
 ![Web UI](img/web-ui.png)
 
-> API demo (example GIF)
+> API demo (requests, web work code, GIF)
 
 ![API Demo](img/api-demo.gif)
 ![API Demo 2](img/api-demo-2.gif)
