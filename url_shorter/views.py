@@ -14,6 +14,22 @@ class ShorterView(viewsets.ModelViewSet):
     serializer_class = ShorterSerializer
 
 
+from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework import viewsets
+from url_shorter.models import Shorter
+from url_shorter.serializers import ShorterSerializer
+from django.views import View
+import hashlib, base64
+# Create your views here.
+
+class ShorterView(viewsets.ModelViewSet):
+
+    queryset = Shorter.objects.all()
+    serializer_class = ShorterSerializer
+
+
 class ReturnRequestView(View):
 
     def get(self, request, *args, **kwargs):
@@ -32,11 +48,23 @@ class ReturnRequestView(View):
                 defaults={'url': short_code}
             )
 
+            short_url = request.build_absolute_uri(f'/{shorter.url}')
+
             return render(
-                request, 
-                'main.html', 
-                {'short_code': f'http://localhost:8000/{shorter.url}', "original_url": ""}
+                request,
+                'main.html',
+                {
+                    'short_code': short_url,
+                    'original_url': ""
+                }
             )
+
+class RedirectShortUrl(View):
+
+    def get(self, request, short_url, *args, **kwargs):
+
+        shorter_instance = get_object_or_404(Shorter, url=short_url)
+        return redirect(shorter_instance.original_url)
 
 class RedirectShortUrl(View):
 
